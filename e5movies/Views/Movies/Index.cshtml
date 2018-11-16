@@ -85,21 +85,21 @@
                         <strong>@Html.DisplayNameFor(model => model.StoryLine): </strong>
                         @Html.DisplayFor(model => item.StoryLine)
                         <div id="page-link-btn">
-                            <div id="details-edit-delete">
+                            <div id="details-edit-delete" class="row">
                                 <div class="reviewbtn">
-                                    <input type="button" id="@(i)" class="showHideBtn col-md-3 btn btn-default" style="width: 30%;" value="Show Reviews" />
+                                    <input type="button" id="@(i)" class="showHideBtn btn btn-default col-lg-3 col-sm-11" value="Show Reviews" />
                                 </div>
                                 @if (user != null)
                                 {
                                     @*Keeping in the database to later enable admin users to edit/delete and hide from users*@
-                                    <a href="@Url.Action("Edit", "Movies", new { id = item.ImageID })" style="text-decoration: none;">
-                                        <div class="btn btn-default col-md-3">Edit Info</div>
+                                    <a href="@Url.Action("Edit", "Movies", new { id = item.ImageID })" style="text-decoration: none;" class="btn btn-default">
+                                        Edit Info
                                     </a>
-                                    <a href="@Url.Action("Delete", "Movies", new { id = item.ImageID })" style="text-decoration: none;">
-                                        <div class="btn btn-default">Delete Info</div>
+                                    <a href="@Url.Action("Delete", "Movies", new { id = item.ImageID })" class="btn btn-default" style="text-decoration: none;">
+                                        Delete Info
                                     </a>
                                 }
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
