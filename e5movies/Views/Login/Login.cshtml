@@ -1,0 +1,24 @@
+﻿<link href="~/Content/movie-index.css" rel="stylesheet" />
+<link href="~/Content/login.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="login-form">
+        <div class="main-div">
+            <h2>Admin Login</h2>
+            <p>Please enter your username and password</p>
+
+            @Html.TextBox("name", null, new { @class = "form-control", @placeholder="Username" })
+            <br />
+            @Html.TextBox("password", null, new { @class = "form-control", @placeholder="Password", @type="password" })<br />
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+

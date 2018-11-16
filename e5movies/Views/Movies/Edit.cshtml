@@ -1,0 +1,154 @@
+﻿@model e5movies.Models.Image
+@using e5movies.Models;
+
+@{
+    ViewBag.Title = "Edit Movies";
+}
+@{
+    var user = Session["user"] as admin;
+}
+@if (user != null)
+{
+    <div id="t-edit">
+        <h1>Edit Details for "@Html.DisplayFor(model => model.Title)"</h1>
+    </div>
+
+    using (Html.BeginForm("Edit", "Movies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ImageID)
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10 col-lg-6">
+                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.ImagePath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10  col-lg-6">
+                        <label class="btn btn-default btn-file">
+                            Choose File .....<input type="file" class="form-control-file" name="ImageFile" required style="display: none;" onchange="$('#upload-file-info').val($(this).val());">
+                            <input type="text" id="upload-file-info" readonly />
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.Genre, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10  col-lg-6">
+                        @Html.EditorFor(model => model.Genre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Genre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.Starring, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10  col-lg-6">
+                        @Html.EditorFor(model => model.Starring, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Starring, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.Director, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10  col-lg-6">
+                        @Html.EditorFor(model => model.Director, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Director, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.StoryLine, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10 col-lg-6">
+                        @Html.EditorFor(model => model.StoryLine, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.StoryLine, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.DateReleased, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10 col-lg-6">
+                        @Html.EditorFor(model => model.DateReleased, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DateReleased, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.VideoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10 col-lg-6">
+                        @Html.EditorFor(model => model.VideoPath, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.VideoPath, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-offset-2">
+                    <h4 style="color: red;">
+                        @Html.LabelFor(model => model.UploadTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                    </h4>
+                    <div class="col-md-10 col-lg-6">
+                        @Html.TextBox("UploadTime", DateTime.Now.ToString("MMMM dd, yyyy hh:mm:ss"))
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%; max-width: 100%; text-align: center; color: black; padding: 30px;">
+            <input type="submit" value="Save Changes" class="btn btn-secondary" />
+        </div>
+    }
+}
+@if (user == null)
+{
+    <h1 class="text-center text-danger" style="margin-top: 15%; margin-bottom: 20%;">
+        You are not authorized to visit this page.
+        <br />
+        <a href="@Url.Action("Login", "Login")">Go to Login</a>
+    </h1>
+}
+<a href="@Url.Action("Index", "Movies")" style="text-decoration:none;">
+    <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px; margin-bottom: 20px;"></span>
+    Back to Movies
+</a>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

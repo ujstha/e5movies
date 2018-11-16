@@ -1,0 +1,156 @@
+﻿@model e5movies.Models.Image
+@using e5movies.Models;
+
+@{
+    ViewBag.Title = "Movies's Details";
+}
+
+<h1>Details about "@Html.DisplayFor(model => model.Title)"</h1>
+
+@*Average star sections*@
+<div>
+    @for (var n = 1; n <= Model.RatingAVG; n++)
+    {
+        <span class="glyphicon glyphicon-star" style="vertical-align:middle; color: darkorange;"></span>
+    }
+    @for (var n = (Model.RatingAVG + 1); n <= 5; n++)
+    {
+        <span class="glyphicon glyphicon-star-empty" style="vertical-align:middle;"></span>
+    }
+</div>
+
+@*Movie summary section*@
+<div>
+    <hr />
+    <div style="max-width: 100%; width: 100%;">
+        <div id="imageDiv">
+            <dl class="dl-vertical">
+                <dd>
+                    <img src="@Url.Content(Model.ImagePath)" width="280" height="385" alt="Image" />
+                </dd>
+                <br />
+                <dd>
+                    <b>Image Path : </b> @Html.DisplayFor(model => model.ImagePath)
+                </dd>
+            </dl>
+        </div>
+        <div id="detailDiv" style="padding: 15px; margin: 2px;">
+            <dl class="dl-vertical">
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.Genre)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Genre)
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.Starring)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Starring)
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.Director)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Director)
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.RatingAVG)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RatingAVG) out of 5
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.StoryLine)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.StoryLine)
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.DateReleased)
+                </dt>
+                <dd>
+                    @Convert.ToDateTime(Model.DateReleased).ToString("MMMM d, yyyy")
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.VideoPath)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.VideoPath)
+                </dd>
+                <br />
+                <dt style="font-size: 22px; color: lightgrey;">
+                    @Html.DisplayNameFor(model => model.UploadTime)
+                </dt>
+                <dd>
+                    @Convert.ToDateTime(Model.UploadTime).ToString("MMMM d, yyyy hh:mm:ss tt")
+                </dd>
+                <br />
+            </dl>
+            @{
+                var user = Session["user"] as admin;
+            }
+            @if (user != null)
+            {
+                <a href="@Url.Action("Edit", "Movies", new { id = Model.ImageID })" style="text-decoration:none;">
+                    <button type="button" class="btn btn-warning" style="font-size: 18px; padding: 10px;">
+                        Edit this details
+                    </button>
+                </a>
+                <a href="@Url.Action("Delete", "Movies", new { id = Model.ImageID })" style="text-decoration:none; margin-left: 15px;">
+                    <button type="button" class="btn btn-danger" style="font-size: 18px; padding: 10px;">
+                        Delete this movie
+                    </button>
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+@*Loops through reviews for the selected movie*@
+<div class="reviews">
+    @Html.Partial("_reviewPage")
+</div>
+
+@*Submit section*@
+<div class="reviewSubmit">
+    @Html.Partial("_reviewBox")
+</div>
+
+
+<a href="@Url.Action("Index", "Movies")" style="text-decoration:none;">
+    <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px; margin-bottom: 20px;"></span>
+    Back to Movies
+</a>
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(main());
+
+    function main() {
+        @*Scroll to the top animation*@
+        $("a[href='#top']").click(function(){
+            $("html, body").animate({scrollTop: 0}, "slow");
+            return false;
+        });
+
+        StarChange();
+    };
+
+    @*Changes the stars to the glow with the rating value*@
+    function StarChange() {
+        for (var i =1; i<=@Model.RatingAVG; i++){
+            $("#sRate"+i).attr('class', 'glyphicon glyphicon-star');
+        }
+    }
+</script>

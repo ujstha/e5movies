@@ -1,0 +1,144 @@
+﻿@model e5movies.Models.Image
+@using e5movies.Models;
+
+@{
+    ViewBag.Title = "Delete Movies";
+}
+@{
+    var user = Session["user"] as admin;
+}
+@if (user != null)
+{
+    <h1>Delete details about " @Html.DisplayFor(model => model.Title) "</h1>
+
+    <div>
+        <hr />
+        <div style="max-width: 100%; width: 100%;">
+            <div id="imageDiv">
+                <dl class="dl-vertical">
+                    <dd>
+                        <img src="@Url.Content(Model.ImagePath)" width="280" height="385" alt="Image" />
+                    </dd>
+                    <br />
+                    <dd>
+                        <b>Image Path : </b> @Html.DisplayFor(model => model.ImagePath)
+                    </dd>
+                </dl>
+            </div>
+            <div id="detailDiv" style="padding: 15px; margin: 2px;">
+                <a href="@Url.Action("Edit", "Movies", new { id = Model.ImageID })" style="text-decoration:none;">
+                    <button type="button" class="btn btn-warning" style="font-size: 18px; margin-bottom: 20px;">
+                        Edit Info
+                    </button>
+                </a>
+                <dl class="dl-vertical">
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Genre)
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.Starring)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Starring)
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.Director)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Director)
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.RatingAVG)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.RatingAVG) out of 5
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.StoryLine)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.StoryLine)
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.DateReleased)
+                    </dt>
+                    <dd>
+                        @Convert.ToDateTime(Model.DateReleased).ToString("MMMM d, yyyy")
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.VideoPath)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.VideoPath)
+                    </dd>
+                    <br />
+                    <dt style="font-size: 22px; color: lightgrey;">
+                        @Html.DisplayNameFor(model => model.UploadTime)
+                    </dt>
+                    <dd>
+                        @Convert.ToDateTime(Model.UploadTime).ToString("MMMM d, yyyy hh:mm:ss tt")
+                    </dd>
+                    <br />
+                </dl>
+                <a href="@Url.Action("Index", "Movies")" style="text-decoration:none;">
+                    <button type="button" class="btn btn-primary" style="font-size: 18px; margin-bottom: 50px;">
+                        <span class="glyphicon glyphicon-arrow-left" style="font-size: 18px;"></span>
+                        Back to Movies
+                    </button>
+                </a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" style="font-size: 18px; margin-bottom: 50px; margin-left: 15px;" data-toggle="modal" data-target="#triggerModal">
+                    Delete this movie
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="triggerModal" tabindex="-1" role="dialog" aria-labelledby="title-delete" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div class="modal-title" id="title-delete" style="color: black;">
+                        <h3>Confirm Delete.....</h3>
+                    </div>
+                </div>
+                <div class="modal-body" style="color: black;">
+                    <h4>Are you sure to delete this movie - @Html.DisplayFor(model => model.Title) ?????</h4>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-actions">
+                            <input type="submit" value="Delete" class="btn btn-danger" />
+                            <a href="@Url.Action("Delete", "Movies", new { id = Model.ImageID })" class="btn btn-primary">
+                                Cancel
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (user == null)
+{
+    <h1 class="text-center text-danger" style="margin-top: 15%; margin-bottom: 20%;">
+        You are not authorized to visit this page.
+        <br />
+        <a href="@Url.Action("Login", "Login")">Go to Login</a>
+    </h1>
+}

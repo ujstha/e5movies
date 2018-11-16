@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="moviesdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Genre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Starring" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Director" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="StoryLine" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateReleased" Type="DateTime" Precision="3" />
+    <Property Name="RatingAVG" Type="Int32" />
+    <Property Name="VideoPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="UploadTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_dbo_Review_dbo_Image_ImageID" FromRole="Image" ToRole="Review" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="ReviewID" />
+    </Key>
+    <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ImageID" Type="Int32" Nullable="false" />
+    <Property Name="DateReviewed" Type="DateTime" Precision="3" />
+    <Property Name="rating" Type="Int32" />
+    <NavigationProperty Name="Image" Relationship="Self.FK_dbo_Review_dbo_Image_ImageID" FromRole="Review" ToRole="Image" />
+  </EntityType>
+  <Association Name="FK_dbo_Review_dbo_Image_ImageID">
+    <End Role="Image" Type="Self.Image" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Review" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Image">
+        <PropertyRef Name="ImageID" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="ImageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="moviesdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Images" EntityType="Self.Image" />
+    <EntitySet Name="Reviews" EntityType="Self.Review" />
+    <AssociationSet Name="FK_dbo_Review_dbo_Image_ImageID" Association="Self.FK_dbo_Review_dbo_Image_ImageID">
+      <End Role="Image" EntitySet="Images" />
+      <End Role="Review" EntitySet="Reviews" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

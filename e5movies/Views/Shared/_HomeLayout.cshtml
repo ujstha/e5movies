@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/cssimage/logo.png" />
+    <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <title>e5movies (@ViewBag.Title) - Movies, TV and more.....</title>
+    <style type="text/css">
+        #myVideo {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            max-width: 100%;
+            min-height: 100%;
+        }
+
+        #myBtn {
+            position: fixed;
+            top: 40%;
+            right: auto;
+            left: 38%;
+            width: auto;
+            font-family: 'Krub', sans-serif;
+            font-size: 40px;
+            padding: 10px;
+            border: 1px solid #905353;
+            -webkit-box-shadow: 5px 5px 10px #000000;
+            -moz-box-shadow: 5px 5px 10px #000000;
+            box-shadow: 5px 5px 10px #000000;
+            background: #ddd;
+            color: #000;
+            cursor: pointer;
+            border-radius: 2px;
+            text-decoration: none;
+        }
+        #video {
+            width: 100%;
+            height: 100%;
+            overflow: hidden
+        }
+
+            #myBtn:hover {
+                transform: scale(1.2);
+                transition: .2s ease-in-out;
+            }
+        @@media only screen and (min-width: 600px){
+            #myVideo {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                max-width: 100%;
+                min-height: 100%;
+            }
+
+            a {
+                position: fixed;
+                top: 40%;
+                right: auto;
+                
+                width: auto;
+                font-family: 'Krub', sans-serif;
+                font-size: 2px;
+                
+                border: 1px solid #905353;
+                -webkit-box-shadow: 5px 5px 10px #000000;
+                -moz-box-shadow: 5px 5px 10px #000000;
+                box-shadow: 5px 5px 10px #000000;
+                background: #ddd;
+                color: blue;
+                cursor: pointer;
+                border-radius: 2px;
+                text-decoration: none;
+            }
+
+            #myBtn:hover {
+                transform: scale(1.2);
+                transition: .2s ease-in-out;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

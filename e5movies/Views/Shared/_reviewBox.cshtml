@@ -1,0 +1,93 @@
+﻿@*This is for the review adding section*@
+<link href="~/Content/star.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row">
+        <h3> Post your review here!</h3>
+    </div>
+    <div class="reviewBox">
+        @using (Html.BeginForm("Add", "Review", FormMethod.Post, new { onsubmit = "return SubmitReview()" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @*essentially boostrap row for forms*@
+                @*Star groupings*@
+                <div class="form-group">
+                    <label class="col-md-4 control-label"> Rate this movie (1 star is bad, 5 star is good) </label>
+                        <div onmouseout="CRateSelected()">
+                            <span class="glyphicon glyphicon-star-empty" id="Rate1" onclick="CRate(1)" onmouseover="CRateOver(1)" onmouseout="CRateOut(1)"></span>
+                            <span class="glyphicon glyphicon-star-empty" id="Rate2" onclick="CRate(2)" onmouseover="CRateOver(2)" onmouseout="CRateOut(2)"></span>
+                            <span class="glyphicon glyphicon-star-empty" id="Rate3" onclick="CRate(3)" onmouseover="CRateOver(3)" onmouseout="CRateOut(3)"></span>
+                            <span class="glyphicon glyphicon-star-empty" id="Rate4" onclick="CRate(4)" onmouseover="CRateOver(4)" onmouseout="CRateOut(4)"></span>
+                            <span class="glyphicon glyphicon-star-empty" id="Rate5" onclick="CRate(5)" onmouseover="CRateOver(5)" onmouseout="CRateOut(5)"></span>
+                        </div>
+                </div>
+                @*Comment Box section with 5 rows*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <textarea name="Comment" id="Comment" required rows="5" style="width:100%;" class="form-control"></textarea>
+                    </div>
+                </div>
+                @*Form grabbs hidden information about the Review*@
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <input type="hidden" name="ImageID" value="@ViewBag.ImageID" />
+                        <input type="hidden" name="Rating" id="Rating" value="0" />
+                        <input type="submit" id="btnRegister" name="btnRegister" value="Submit Review" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<script>
+    function SubmitReview() {
+        if ($("#Rating").val() == "0") {
+            alert("Please rate this service provider."); //doesn't allow to upload review unless value is 1 or more.
+            return false;
+        }
+        else {
+            return true;
+        }
+        $('#test').on('change blur', function () {
+            if ($(this).val().trim().length === 0) {
+                $(this).val(5);
+            }
+        })
+    }
+
+    //Selection of the stars finalized
+    function CRate(r) {
+        $("#Rating").val(r); //sets rating value
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'glyphicon glyphicon-star');
+        }
+        // unselect remaining
+        for (var i = r + 1; i <= 5; i++) {
+            $("#Rate" + i).attr('class', 'glyphicon glyphicon-star-empty');
+        }
+    }
+
+    //Essentially the :hover css but allows for multiple stars to be highlighted
+    function CRateOver(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'glyphicon glyphicon-star');
+        }
+    }
+
+    //unhighlights stars when nolonger active
+    function CRateOut(r) {
+        for (var i = 1; i <= r; i++) {
+            $("#Rate" + i).attr('class', 'glyphicon glyphicon-star-empty');
+        }
+    }
+
+    function CRateSelected() {
+        var setRating = $("#Rating").val();
+        for (var i = 1; i <= setRating; i++) {
+            $("#Rate" + i).attr('class', 'glyphicon glyphicon-star');
+        }
+    }
+</script>

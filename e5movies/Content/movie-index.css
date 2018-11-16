@@ -1,0 +1,98 @@
+﻿body {
+    background-color: rgba(53, 50, 48, .9);
+    word-spacing: 1px;
+    letter-spacing: .6px;
+}
+#indexContainer {
+    display: block;
+    height: 100%;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+}
+#sidenav-search-container {
+    padding: 10px;
+    height: 100%;
+    border: 1px solid #080808;
+    background-color: rgba(34, 34, 34, .8);
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+#add-new-container:hover #add-new {
+    transform: scale(1.2);
+    transition: all 0.3s ease-in-out 0.2s;
+}
+#add-new {
+    width: 60%;
+    height: 20%;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    background-color: grey;
+    margin: 0 auto;
+    line-height: 50px;
+}
+#middlebar-main {
+    padding: 10px;
+    background-color: rgba(34, 34, 34, .8);
+}
+#movie-poster {
+    padding: 10px;
+    text-align: center;
+}
+#movie-poster img {
+    border: 1px solid black;
+    -webkit-box-shadow: 5px 5px 10px #000000;
+    -moz-box-shadow: 5px 5px 10px #000000;
+    box-shadow: 5px 5px 10px #000000;
+    vertical-align: middle;
+}
+.all {
+    margin: 5px;
+}
+#info-container {
+    margin-top: 40px;
+}
+#title a {
+    text-decoration: none;
+    color: white;
+}
+#uploadtime {
+    margin-bottom: 25px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    line-height: 30px;
+    font-size: 14px;
+    color: lightgrey;
+    letter-spacing: .2px;
+}
+#storyline {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #ededed;
+    background-color: lightgrey;
+    -webkit-box-shadow: 0 2px 5px 1px rgba(0,0,0,.25);
+    -moz-box-shadow: 0 2px 5px 1px rgba(0,0,0,.25);
+    box-shadow: 0 2px 5px 1px rgba(0,0,0,.25);
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-top: 10px;
+    padding: 8px 10px;
+    color: #000;
+}
+#videopath {
+    text-align: center;
+    font-size: 18px;
+    padding: 5px;
+}
+hr {
+    border: 1px solid grey;
+}
+#page-link-btn .btn {
+    margin: 10px;
+    width: 30%;
+}

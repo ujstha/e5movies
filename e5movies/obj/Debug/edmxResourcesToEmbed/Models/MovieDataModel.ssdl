@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="moviesdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="ImageID" />
+    </Key>
+    <Property Name="ImageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" MaxLength="250" />
+    <Property Name="ImagePath" Type="varchar(max)" />
+    <Property Name="Genre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Starring" Type="nvarchar(max)" />
+    <Property Name="Director" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StoryLine" Type="nvarchar(max)" />
+    <Property Name="DateReleased" Type="datetime" />
+    <Property Name="RatingAVG" Type="int" />
+    <Property Name="VideoPath" Type="varchar(max)" />
+    <Property Name="UploadTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Review">
+    <Key>
+      <PropertyRef Name="ReviewID" />
+    </Key>
+    <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImageID" Type="int" Nullable="false" />
+    <Property Name="DateReviewed" Type="datetime" />
+    <Property Name="rating" Type="int" />
+  </EntityType>
+  <Association Name="FK_dbo_Review_dbo_Image_ImageID">
+    <End Role="Image" Type="Self.Image" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Review" Type="Self.Review" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Image">
+        <PropertyRef Name="ImageID" />
+      </Principal>
+      <Dependent Role="Review">
+        <PropertyRef Name="ImageID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="moviesdbModelStoreContainer">
+    <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_dbo_Review_dbo_Image_ImageID" Association="Self.FK_dbo_Review_dbo_Image_ImageID">
+      <End Role="Image" EntitySet="Image" />
+      <End Role="Review" EntitySet="Review" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

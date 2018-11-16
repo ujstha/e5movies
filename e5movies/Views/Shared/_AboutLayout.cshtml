@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="~/cssimage/logo.png" />
+    <link href="https://fonts.googleapis.com/css?family=Charmonman" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Krub" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+    <title>e5movies (@ViewBag.Title) - Movies, TV and more.....</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @using e5movies.Models;
+</head>
+<body>
+    <div id="top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a style="height: 50px; padding-left: 20px;" href="@Url.Action("Index", "Home")">
+                        <img src="~/cssimage/logo.jpg" style="height: inherit;" alt="Logo" />
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse" style="margin-right: auto;">
+                    <ul class="nav navbar-nav" style="padding-left: 20px;">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Movies", "Index", "Movies")</li>
+                        <li class="active">@Html.ActionLink("About Us", "About", "Home")</li>
+                        @{
+                            var user = Session["user"] as admin;
+                        }
+                        @if (user == null)
+                        {
+                            <li style="margin-right: 20px;">
+                                <a href="@Url.Action("Login", "Login")">
+                                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                                    Login
+                                </a>
+                            </li>
+                        }
+                        @if (user != null)
+                        {
+                            <li style="margin-right: 20px;">
+                                <a href="@Url.Action("Logout", "Login")">
+                                    <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                    Logout
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="container-fluid">
+        <footer style="bottom: 10px; margin-top: 20px; position: relative;">
+            &copy; @DateTime.Now.Year - e5movies. All Rights Reserved.
+            <a href="#top" style="float: right; right: 10px; bottom: 10px; position: fixed;">
+                <span class="glyphicon glyphicon-arrow-up" style="font-size: 25px; background-color:rgba(0,0,0, .4); padding: 14px; border-radius: 50%; color: white;"></span>
+            </a>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(document).ready(main());
+
+        function main() {
+            @*top scroll animation*@
+            $("a[href='#top']").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                return false;
+            });
+        }
+    </script>
+</body>
+</html>

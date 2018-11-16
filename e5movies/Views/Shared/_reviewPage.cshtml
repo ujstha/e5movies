@@ -1,0 +1,49 @@
+﻿@model e5movies.Models.Image
+
+<table class="table">
+    @*Title Row*@
+    <tr>
+        <th>
+            <h4>Reviews</h4>
+        </th>
+        <th>
+            <h4>Rating</h4>
+        </th>
+        <th>
+            <h4>Date Rated</h4>
+        </th>
+    </tr>
+
+    @*Loop through reviews for the selected movie*@
+    @foreach (var review in Model.Reviews)
+    {
+        <tr>
+            <td width="40%">
+                <h5>
+                    @Html.DisplayFor(modelItem => review.Comment)
+                </h5>
+            </td>
+
+            <td width="35%">
+                <h5>
+                    @*Look at rating value and add appropriate stars associated*@
+                    @for (var i = 1; i <= review.rating; i++)
+                    {
+                        <span class="glyphicon glyphicon-star" style="color: darkorange;"></span>
+                    }
+                    @for (var i = (review.rating + 1); i <= 5; i++)
+                    {
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                    }
+                </h5>
+            </td>
+
+            <td width="25%">
+                <h5>
+                    @Convert.ToDateTime(review.DateReviewed).ToString("MMMM d, yyyy")
+                </h5>
+            </td>
+        </tr>
+    }
+</table>
+

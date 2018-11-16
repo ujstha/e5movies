@@ -1,0 +1,247 @@
+﻿@model IEnumerable<e5movies.Models.Image>
+@using e5movies.Models;
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/movie-index.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Movie's Index";
+}
+<div id="indexContainer">
+    <div class="row">
+        <div id="sidenav-search-container" class="col-md-3 col-sm-6 all">
+            @using (Html.BeginForm("Index", "Movies", FormMethod.Get))
+            {
+                <div>
+                    <div class="form-group">
+                        <span class="input-group-addon glyphicon glyphicon-search" aria-hidden="true"></span>
+                        @Html.TextBox("SearchString", null, htmlAttributes: new { @class = "form-control", placeholder = "Search for Movies, TV Shows and more...." })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("movieGenre", (SelectList)ViewBag.movieGenre, "Search by Genre", htmlAttributes: new { @class = "form-control", type = "button" })
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("movieStarring", (SelectList)ViewBag.movieStarring, "Search by Casting", htmlAttributes: new { @class = "form-control", type = "button" })
+                    </div>
+                </div>
+            }
+            <hr />
+            @{
+                var user = Session["user"] as admin;
+            }
+
+            @if (user != null)
+            {
+                <div id="add-new-container">
+                    <a href="@Url.Action("Create", "Movies")" style="text-decoration: none;">
+                        <div id="add-new">Add New Movies</div>
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div id="middlebar-main" class="col-md-6 all">
+            @*Counter that names the review div and button to later hide*@
+            @{int i = 1;}
+            @foreach (var item in Model)
+            {
+                @*Movie information*@
+                <div id="info-container">
+                    <div id="title">
+                        <h2>
+                            <a href="@Url.Action("Details", "Movies", new {id = item.ImageID})">
+                                @Html.DisplayFor(model => item.Title)
+                                <small>
+                                    (@Convert.ToDateTime(item.DateReleased).ToString("yyyy"))
+                                </small>
+                            </a>
+                            <br />
+                            <a style="font-size: 20px;">
+                                <small>@Html.DisplayFor(model => item.Genre)</small>
+                            </a>
+                        </h2>
+                        <p style="float: right; font-size: 20px;">
+                            <span class="glyphicon glyphicon-star" style="color: darkorange; vertical-align: middle;"></span>
+                            &nbsp;@Html.DisplayFor(model => item.RatingAVG)<small style="color: unset;">/5</small>
+                        </p>
+                    </div>
+
+                    <div id="uploadtime">
+                        Posted on @Convert.ToDateTime(item.UploadTime).ToString("MMMM d, yyyy") by e5movies
+                    </div>
+
+                    <div id="movie-poster">
+                        <div>
+                            <a href="@Url.Action("Details", "Movies", new { id = item.ImageID })">
+                                <img src="@Url.Content(item.ImagePath)" width="280" height="385" alt="Image" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="videopath">
+                        <a href="@($"{item.VideoPath}")" target="_blank">Movie Trailer - IMDB Link</a>
+                    </div>
+
+                    <div id="storyline">
+                        <strong>@Html.DisplayNameFor(model => model.StoryLine): </strong>
+                        @Html.DisplayFor(model => item.StoryLine)
+                        <div id="page-link-btn">
+                            <div id="details-edit-delete">
+                                <div class="reviewbtn">
+                                    <input type="button" id="@(i)" class="showHideBtn col-md-3 btn btn-default" style="width: 30%;" value="Show Reviews" />
+                                </div>
+                                @if (user != null)
+                                {
+                                    @*Keeping in the database to later enable admin users to edit/delete and hide from users*@
+                                    <a href="@Url.Action("Edit", "Movies", new { id = item.ImageID })" style="text-decoration: none;">
+                                        <div class="btn btn-default col-md-3">Edit Info</div>
+                                    </a>
+                                    <a href="@Url.Action("Delete", "Movies", new { id = item.ImageID })" style="text-decoration: none;">
+                                        <div class="btn btn-default">Delete Info</div>
+                                    </a>
+                                }
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews" id="@("rev"+i)">
+                    @*if statement incase no reviews*@
+                    @if (item.Reviews.Count == 0)
+                    {
+                        <div class=container-fluid>
+                            <div class="row">
+                                <div class="alert alert-info" style="padding: 0; padding-left: 5px;">
+                                    <h5 style="font-size: 20px; color: black;">
+                                        Be the first to write a review for this movie!
+                                        <a href="@Url.Action("Details", new { id = item.ImageID })" style="text-decoration:none; font-weight: bold;">
+                                            <button type="button" class="btn btn-default" style="font-size: 20px;">
+                                                Add Review
+                                            </button>
+                                        </a>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <br />
+                        <a href="@Url.Action("Details", new { id = item.ImageID })" style="text-decoration:none;">
+                            <button type="button" class="btn btn-default" style="font-size: 20px;">
+                                Add Review
+                            </button>
+                        </a>
+                        <table class="table" style="margin-top: 20px;">
+                            <tr>
+                                <th>
+                                    <h4>Reviews</h4>
+                                </th>
+                                <th>
+                                    <h4>Rating</h4>
+                                </th>
+                                <th>
+                                    <h4>Date Rated</h4>
+                                </th>
+                            </tr>
+
+                            @foreach (var review in item.Reviews)
+                            {
+                                <tr>
+                                    <td width="40%">
+                                        <h5>
+                                            @Html.DisplayFor(modelItem => review.Comment)
+                                        </h5>
+                                    </td>
+
+                                    <td width="35%">
+                                        <h5>
+                                            @for (var n = 1; n <= review.rating; n++)
+                                            {
+                                                <span class="glyphicon glyphicon-star" style="color: darkorange;"></span>
+                                            }
+                                            @for (var n = (review.rating + 1); n <= 5; n++)
+                                            {
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                            }
+                                        </h5>
+                                    </td>
+
+                                    <td width="25%">
+                                        <h5>
+                                            @Convert.ToDateTime(review.DateReviewed).ToString("MMMM d, yyyy")
+                                        </h5>
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                    <div id="relDate"></div>
+                </div>
+                i++;
+            }
+        </div>
+    </div>
+</div>
+<a href="@Url.Action("Index", "Home")" style="text-decoration:none;">
+    <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px; margin-bottom: 20px;"></span>
+    Back to Home
+</a>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(main());
+
+    function main() {
+        @*top scroll animation*@
+        $("a[href='#top']").click(function () {
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
+
+        @*Initial hides reviews *@
+        $('.reviews').hide();
+
+        @*Does the Show/Hide button and changes the text on the button*@
+        $('.showHideBtn').click(function () {
+            $("#rev" + (this.id)).toggle();
+
+            if (this.value == 'Show Reviews') {
+                this.value = 'Hide Reviews';
+            } else {
+                this.value = 'Show Reviews';
+            }
+        });
+    };
+</script>
+<script type="text/javascript">
+
+    var data = [];
+    //parsing data from Released date value to data array
+    @foreach (var item in Model)
+    {
+     <text>
+         data.push([ @Html.DisplayFor(model => item.DateReleased) ]);
+     </text>
+    }
+
+    var newdata = [];
+    @foreach (var item in Model)
+    {
+        <text>
+            data.push([ @Html.Display(DateTime.Now.ToString("MMMM d, yyyy"))]);
+        </text>
+    }
+
+    if (data > newdata) {
+        document.getElementById('relDate').innerHTML = "Up";
+    }
+    else if (1 <= data <= 30) {
+        document.getElementById('relDate').innerHTML = "In t";
+    }
+    else {
+        document.getElementById('relDate').innerHTML = "Rel";
+    }
+
+</script>

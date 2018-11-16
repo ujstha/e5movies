@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "About Page";
+    Layout = "~/Views/Shared/_AboutLayout.cshtml";
+}
+
+<h1>About Us</h1>
+<hr />
+<h4 style="letter-spacing: .7px; word-spacing: 1px; line-height: 40px;">
+    <strong style="font-size: 20px;">e5movies</strong> is a website which provides information about released or upcoming movies such as their storyline, cast and crew, director, etc. along with the official trailer from IMDB website. It has feature of reviewing particular movies and rating them.
+</h4>
+<br />
+<div>
+    <h4>This Web Application was built in <strong>MVC</strong> model using : </h4>
+    <li>C# ASP.NET</li>
+    <br />
+    <li>Entity Framework</li>
+    <br />
+    <li>SQL Server</li>
+    <br />
+    <li>Bootstrap</li>
+    <br />
+    <li>JavaScript</li>
+    <br />
+    <li>JQUERY</li>
+</div>
+<h3>Creator of this Web Application are : <strong>UJJAWAL SHRESTHA , KAMAL LAMSAL</strong></h3>
+<a href="@Url.Action("Index", "Home")" style="text-decoration:none;">
+    <span class="glyphicon glyphicon-arrow-left" style="font-size: 25px; margin-bottom: 20px;"></span>
+    Back to Home
+</a>
